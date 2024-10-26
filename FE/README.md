@@ -10,3 +10,5 @@ The front end is written in React TypeScript using the React BootStrap library. 
 The web requests are being sent in the handleSubmit function. This function does correctly send JSON containing the data from the input text boxes to the backend using the API. This method will have to be added for file sending functionality. The files are currently only being stored in the nationalID, transcript1, transcript2, and transcript3 but are not sent to the backend.
 
 When uploading files, currently only PDFs can be uploaded. The code does not check the file size and limit submissions. This is something that should be added but we did not have time to implemment it.
+
+Currently, the input text boxes are not required. This is a feature that should be added in the feature.
