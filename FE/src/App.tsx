@@ -69,7 +69,7 @@ function App() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    let studentData = { first_name: fName, middle_name: mName, last_name: lName, additional_name: addlName, gender: gender, dob: dob, degree_level: degreeLevel, email: email, degree_program: degreeProgram, country1: country, country2, country3
+    let studentData = { first_name: fName, middle_name: mName, last_name: lName, additional_name: addlName, gender: gender, dob: dob, degree_level: degreeLevel, email: email, degree_program: degreeProgram, country1: country1, country2: country2, country3: country3
      }
      let jsonData = JSON.stringify(studentData);
      fetch('https://transcript-app-575087806626.us-central1.run.app/' , {
@@ -186,37 +186,37 @@ function App() {
               </Form.Select>
             </Form.Group>
           </Row>
-            <Form.Label className="pt-3 form-control-md"><br/><br/>All documents must be submitted in .pdf format. <br/>If you are unable to convert your documents to a .pdf, <br/>please email them directly to admissions@miscio.io</Form.Label>
+            <Form.Label className="pt-3 form-control-sm"><br/><br/>All documents must be submitted in .pdf format. <br/>If you are unable to convert your documents to a .pdf, <br/>please email them directly to admissions@miscio.io</Form.Label>
             <Form.Group className="mt-3">
               <Form.Label htmlFor="formFileLg" className="form-label-lg">National ID</Form.Label>
               <Form.Control type="file" accept="application/pdf" onChange= {nationalIDChange}/>
             </Form.Group>
-          <Row className="mt-3">
-            <Form.Group as={Col} className="mr-3">
+          <Row className="mt-5">
+            <Form.Group as={Col} className="mr-3  border border-dark border-bottom-0 border-top-0">
               <Form.Label htmlFor="formFileLg" className="form-label">Transcript</Form.Label>
               <Form.Control type="file" accept="application/pdf" required onChange={transcriptOneChange}/>
             </Form.Group>
 
-            <Form.Group as={Col} className="mr-3">
+            <Form.Group as={Col} className="mr-3 border border-dark border-bottom-0 border-top-0">
               <Form.Label htmlFor="formFileLg" className="form-label">Transcript 2</Form.Label>
               <Form.Control type="file" accept="application/pdf" onChange={transcriptTwoChange}/>
             </Form.Group>
     
-            <Form.Group as={Col} className="mr-3">
+            <Form.Group as={Col} className="mr-3 border border-dark border-bottom-0 border-top-0">
               <Form.Label htmlFor="formFileLg" className="form-label">Transcript 3</Form.Label>
               <Form.Control type="file" accept="application/pdf" onChange={transcriptThreeChange}/>
             </Form.Group>
           </Row>
           <Row className="mt-3">
-            <Form.Group as={Col} className="mr-3" controlId="countryTranscript1">
+            <Form.Group as={Col} className="mr-3 border border-top-0 border-dark border-bottom-0" controlId="countryTranscript1">
               <Form.Label>Issuing Country</Form.Label>
               <Form.Control type="text" placeholder="Country" value={country1} onChange={(e) => setCountry1(e.target.value)}/>
             </Form.Group>
-            <Form.Group as={Col} className="mr-3" controlId="countryTranscript2">
+            <Form.Group as={Col} className="mr-3 border border-top-0 border-dark border-bottom-0" controlId="countryTranscript2">
               <Form.Label>Issuing Country</Form.Label>
               <Form.Control type="text" placeholder="Country" value={country2} onChange={(e) => setCountry2(e.target.value)}/>
             </Form.Group>
-            <Form.Group as={Col} className="mr-3" controlId="countryTranscript3">
+            <Form.Group as={Col} className="mr-3 border border-top-0 border-dark border-bottom-0" controlId="countryTranscript3">
               <Form.Label>Issuing Country</Form.Label>
               <Form.Control type="text" placeholder="Country" value={country3} onChange={(e) => setCountry3(e.target.value)}/>
             </Form.Group>
