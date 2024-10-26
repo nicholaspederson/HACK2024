@@ -37,7 +37,7 @@ def main():
     service = build("drive", "v3", credentials=creds)
 
     file_metadata = {
-        "name": "Transcrips",
+        "name": "Transcripts",
         "mimeType": "application/vnd.google-apps.folder",
       }
 
