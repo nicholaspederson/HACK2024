@@ -69,7 +69,7 @@ function App() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    let studentData = { first_name: fName, middle_name: mName, last_name: lName, additional_name: addlName, gender: gender, dob: dob, degree_level: degreeLevel, email: email, degree_program: degreeProgram, country1: country
+    let studentData = { first_name: fName, middle_name: mName, last_name: lName, additional_name: addlName, gender: gender, dob: dob, degree_level: degreeLevel, email: email, degree_program: degreeProgram, country1: country, country2, country3
      }
      let jsonData = JSON.stringify(studentData);
      fetch('https://transcript-app-575087806626.us-central1.run.app/' , {
@@ -102,11 +102,11 @@ function App() {
               <Form.Control type="text" placeholder="First Name" value={fName} onChange={(e) => setFname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="middleNameCon">
-              <Form.Label>Middle Name</Form.Label>
+              <Form.Label><br/>Middle Name</Form.Label>
               <Form.Control type="text" placeholder="Middle Name" value={mName} onChange={(e) => setMname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="lastNameCon">
-              <Form.Label>Last Name</Form.Label>
+              <Form.Label><br/>Last Name</Form.Label>
               <Form.Control type="text" placeholder="Last Name" value={lName} onChange={(e) => setLname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="additionalNameCon">
