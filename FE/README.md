@@ -1,50 +1,12 @@
-# React + TypeScript + Vite
+# Front End
+### How to run
+Run the following commands while in the FE directory to view the front end. Use the CD command in the terminal to navigate to the  …../Hack2024/HACK2024/FE. The …. in the path represents that the path will be different from computer to computer. Once in the FE directory, run the following commands: 
+1. NPM install
+2. NPM run dev
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Details
+The front end is written in React TypeScript using the React BootStrap library. The main portion of the code is in the App.tsx file. Here, lines 13-28 are the variables for each field. To add another field, use the same convention and add another useState statement. Lines 86-230 contains the markup code that will be displayed to the user. This pattern could also be followed by adding a new Form.Group tag and replacing the value and onChange attributes to the new useState variable to create or modify a field.
 
-Currently, two official plugins are available:
+The web requests are being sent in the handleSubmit function. This function does correctly send JSON containing the data from the input text boxes to the backend using the API. This method will have to be added for file sending functionality. The files are currently only being stored in the nationalID, transcript1, transcript2, and transcript3 but are not sent to the backend.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+When uploading files, currently only PDFs can be uploaded. The code does not check the file size and limit submissions. This is something that should be added but we did not have time to implemment it.
