@@ -12,8 +12,3 @@ class StudentData(BaseModel):
     country: str
     degree_program: str
     level: str
-
-# Parse JSON and create an instance
-json_data = '{"first_name": "Alice", "mid_name": "Bill", "last_name": "Joe", "gender": "M", "dob": "2024-10-26", "country": "USA", "degree_program": "BA", "level": "Good"}'
-student = StudentData.parse_raw(json_data)
-print(student)
