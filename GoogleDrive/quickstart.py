@@ -147,7 +147,7 @@ def populateSheet(sheetsService, studentInfo, flags):
         count += 1
     values = [
         [
-            "", # to not be filled
+            "",  # to not be filled
             flagString,  # flags
             "",  # additional notes
             studentInfo.first_name,  # first name
@@ -184,9 +184,10 @@ def populateSheet(sheetsService, studentInfo, flags):
     ).execute()
     return None
 
-#student info is an instance of StudentData
-#files is a list of files
-#flags is a list of a list of strings for each file
+
+# student info is an instance of StudentData
+# files is a list of files
+# flags is a list of a list of strings for each file
 def main(studentInfo, files, flags):
     # asks user to authenticate their identity
     # we use the credentials to access the API
@@ -219,5 +220,7 @@ def main(studentInfo, files, flags):
 
 
 if __name__ == "__main__":
-    temp = StudentData.parse_raw("""{"first_name":"A","middle_name":"B", "last_name":"C", "additional_name":"D", "gender":"E", "dob":"F","degree_level":"G","degree_program":"H","email":"I","country1":"J","country2":"K","country3":"L"}""")
+    temp = StudentData.parse_raw(
+        """{"first_name":"A","middle_name":"B", "last_name":"C", "additional_name":"D", "gender":"E", "dob":"F","degree_level":"G","degree_program":"H","email":"I","country1":"J","country2":"K","country3":"L"}"""
+    )
     main(temp, [], [[]])
