@@ -1,14 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import Tabs from 'react-bootstrap/Tabs'
+import Button from 'react-bootstrap/Button';
 import './App.css'
 import { Col, Dropdown, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 function App() {
-
   const [degreeProgram, setDegreeProgram] = useState("")
   const [degreeLevel, setDegreeLevel] = useState("")
+        
+  const [fName, setFname] = useState("")
+  const [mName, setMname] = useState("");
+  const [lName, setLname] = useState("");
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState("");
+  const [country, setCountry] = useState("");
+  const [degreeType, setDegreeType] = useState("");
+
 
   useEffect(() => {
     if(degreeProgram === "Associate of Arts, General Education" || degreeProgram === "Associate of Ministerial Leadership" || degreeProgram === "Bachelor of Business Administration" || degreeProgram === "Bachelor of Science, Business & Professional Leadership" || degreeProgram === "Bachelor of Science, Communication & Mass Media" || degreeProgram === "Bachelor of Science, Digital Media & Design" || degreeProgram === "Bachelor of Science, Global Education Studies" || degreeProgram === "Bachelor of Science, Human Services" || degreeProgram === "Bachelor of Science, Ministerial Leadership: Biblical Studies" || degreeProgram === "Bachelor of Science, Ministerial Leadership: Christian Ministry" || degreeProgram === "Bachelor of Science, Ministerial Leadership: Pastoral Care and Counseling" || degreeProgram === "Bachelor of Science, Organizational Leadership" || degreeProgram === "Bachelor of Science, Psychology"){
@@ -23,21 +32,14 @@ function App() {
       setDegreeLevel("Masters")
     }
   }, [degreeProgram])
-
-
-
-
-
   
-
-
-
-
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    let studentData={fName:fName, mName:mName, lName:lName, gender:gender, dob:dob, country:country, degreeType:degreeType}
+    console.log(studentData);
+  }
 
   return (
-
-
-
     <Tabs
       defaultActiveKey="profile"
       id="uncontrolled-tab-example"
@@ -48,28 +50,27 @@ function App() {
       </Tab>
 
       <Tab eventKey="student" title="Student">
-
-        <Form>
+        <Form noValidate onSubmit={handleSubmit}>
           <Row className="pt-5">
               <Form.Group as={Col} className="mr-3" controlId="firstNameCon">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control required type="text" placeholder="First Name" />
-                </Form.Group>
+                  <Form.Control type="text" placeholder="First Name" value={fName} onChange={(e)=>setFname(e.target.value)}/>
+            </Form.Group>
               <Form.Group as={Col} className="mr-3" controlId="middleNameCon">
                   <Form.Label>Middle Name</Form.Label>
-                  <Form.Control type="text" placeholder="Middle Name" />
+                  <Form.Control type="middleName" placeholder="Middle Name" value={mName} onChange={(e)=>setMname(e.target.value)}/>
                 </Form.Group>
                 <Form.Group as={Col} className="mr-3" controlId="lastNameCon">
                   <Form.Label>Last Name</Form.Label>
-                  <Form.Control required type="text" placeholder="Last Name" />
-                </Form.Group>
+                  <Form.Control type="lastName" placeholder="Last Name" value={lName} onChange={(e)=>setLname(e.target.value)}/>
+            </Form.Group>
                 <Form.Group as={Col} className="mr-3" controlId="additionalNameCon">
                   <Form.Label>Additional Name (maiden name, second last name, etc.)</Form.Label>
                   <Form.Control required type="text" placeholder="Additional Name" />
                 </Form.Group>
           </Row>
           <Row className="pt-5">
-              <Form.Group as={Col} className="mr-3" controlId="gender">
+                 \<Form.Select aria-label="gender" value={gender} onChange={(e)=>setGender(e.target.value)}>
                   <Form.Label>Gender</Form.Label>
                     <Form.Select aria-label="gender">
                       <option value="male">Male</option>
@@ -78,7 +79,7 @@ function App() {
                 </Form.Group>
                 <Form.Group as={Col} className="mr-3" controlId="birthdate">
                   <Form.Label>Date of Birth: </Form.Label>
-                  <Form.Control aria-label="date" type="Date" /> 
+                <Form.Control type="date" placeholder="Date of Birth: " value={dob} onChange={(e)=>setDob(e.target.value)}/>
                 </Form.Group>
                 <Form.Group as={Col} className="mr-3" controlId="email">
                   <Form.Label>Email</Form.Label>
@@ -147,8 +148,8 @@ function App() {
           <Row className="mt-5">
 
             <Form.Label>{degreeLevel}</Form.Label>          
-            
-          </Row>   
+            <Button variant="primary" type="submit">Submit</Button>
+          </Row>             
         </Form>
       </Tab>
       <Tab eventKey="validation" title="Validation">
