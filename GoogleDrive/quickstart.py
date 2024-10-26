@@ -87,9 +87,9 @@ def getFolderName(studentInfo: StudentData):
     #combine relevent data separated by _
     filename = str(studentInfo.last_name + "_" + 
                    studentInfo.first_name + "_" + 
-                   studentInfo.mid_name + "_" + 
+                   studentInfo.middle_name + "_" + 
                    studentInfo.degree_program + "-" + 
-                   studentInfo.country)
+                   studentInfo.country1)
   return filename
 
 # make the folder in a specific parent
