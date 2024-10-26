@@ -26,6 +26,8 @@ function App() {
 
 
 
+
+
   
 
 
@@ -144,19 +146,20 @@ function App() {
           </Row> 
           <Row className="mt-5">
 
-            <Form.Label>{degreeLevel}</Form.Label>
-
-            <Form.Group className="mt-3">
-              <Form.Control type="formFile" />
-
-            </Form.Group>
-            
+            <Form.Label>{degreeLevel}</Form.Label>          
             
           </Row>   
         </Form>
       </Tab>
       <Tab eventKey="validation" title="Validation">
-        Tab content for Validation Flow
+        
+      <Form.Group className="mb-3">
+        <Form.Label htmlFor="formFile" className="form-label">Transcript</Form.Label>
+        <Form.Control type="file" />
+      </Form.Group>
+
+
+
       </Tab>
     </Tabs>
   )
