@@ -145,7 +145,7 @@ def populateSheet(sheetsService, studentInfo):
             studentInfo.middle_name,  # middle name
             studentInfo.additional_name,  # additional name
             studentInfo.degree_program,  # program description
-            studentInfo.level,  # degree level
+            studentInfo.degree_level,  # degree level
             studentInfo.gender,  # gender
             studentInfo.dob,  # date of birth
             studentInfo.email,  # personal email
