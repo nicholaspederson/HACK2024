@@ -29,7 +29,7 @@ Local options exist as well which utilize Machine Learning Packages (Keras, PyTo
 
 Here are some issues and recommendations:
 - The current configuration is unable to determine image quality.
-  - OpenCV provides excellent tools (one of which is partially implemented in the **TranscriptVal.py** file in the Laplassian function for detecting blur.
+  - OpenCV provides excellent tools (one of which is partially implemented in the **TranscriptVal.py** file in the Laplassian function for detecting blur).
 - The current configuration cannot handle lower quality scans, distorted images, etc.
   - Google's Document AI API would provide some excellent tools for getting this data at low cost. This option also has the benefit of Google's ongoing support and continued improvement.
 - The current configuration provides no information to the student on issues.
