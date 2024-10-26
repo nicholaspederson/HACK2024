@@ -9,11 +9,9 @@ from googleapiclient.errors import HttpError # type: ignore
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 
-
-def main():
-  """Shows basic usage of the Drive v3 API.
-  Prints the names and ids of the first 10 files the user has access to.
-  """
+# looks for existing token, or asks user to verify and generate a token
+# credentials are returned
+def getCreds():
   creds = None
   # The file token.json stores the user's access and refresh tokens, and is
   # created automatically when the authorization flow completes for the first
@@ -32,33 +30,85 @@ def main():
     # Save the credentials for the next run
     with open("token.json", "w") as token:
       token.write(creds.to_json())
+  return creds
+
+# gets the submitted files
+def getFiles():
+  return None
+
+# utilizse an API to call to a databse
+# with the given unique identifier
+# to get relevant student info
+def getInfo(UID):
+  return None
+
+# parses studentInfo to generate
+# appropriate file names
+# return in format FirstName_LastName
+def getStudentName(studentInfo):
+  if studentInfo == None:
+    return "FirstName_LastName"
+  return ""
+
+# prepends the name to each file
+def renameFiles(files, name):
+  return None
+
+# gets the appropriate student name from
+# student info
+# format: LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country
+def getFolderName(studentInfo):
+  if studentInfo == None:
+    return "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country"
+  return ""
+
+# make the folder in a specific parent
+# by using the parent's file ID
+# service: access to google drive API
+# name: name of the file
+# folder ID of test file "Student Files - Nicholas" is 1o0f25LLI9rtfjMGkfMJn6l-fDkXTKfOt
+def createFolder(service, folderName):
+  # place holder name
+  if folderName == "":
+    folderName = "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country"
+  file_metadata = {"name": folderName,
+                     "mimeType": "application/vnd.google-apps.folder",
+                      "parents": ["1o0f25LLI9rtfjMGkfMJn6l-fDkXTKfOt"]}
+
+  # pylint: disable=maybe-no-member
+  file = service.files().create(body=file_metadata, fields="id").execute()
+  print(f'Folder ID: "{file.get("id")}".')
+  return file.get("id")
+
+# populate the folder with the correct files
+def populateFolder(service, files, folderID):
+  return None
+
+# whatever cleaning may or may not need to happen
+def clean():
+  return None
+
+def main():
+  creds = getCreds()
 
   try:
     service = build("drive", "v3", credentials=creds)
 
-    file_metadata = {"name": "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country",
-                     "mimeType": "application/vnd.google-apps.folder",
-                      "parents": ["1o0f25LLI9rtfjMGkfMJn6l-fDkXTKfOt"]}
+    files = getFiles()
 
-    # pylint: disable=maybe-no-member
-    file = service.files().create(body=file_metadata, fields="id").execute()
-    print(f'Folder ID: "{file.get("id")}".')
-    return file.get("id")
+    studentInfo = getInfo()
 
-    '''    # Call the Drive v3 API
-    results = (
-        service.files()
-        .list(pageSize=10, fields="nextPageToken, files(id, name)")
-        .execute()
-    )
-    items = results.get("files", [])
+    name = getStudentName(studentInfo)
 
-    if not items:
-      print("No files found.")
-      return
-    print("Files:")
-    for item in items:
-      print(f"{item['name']} ({item['id']})")'''
+    renameFiles(files, name)
+
+    folderName = getFolderName(studentInfo)
+
+    studentFolder = createFolder(service, folderName)
+
+    populateFolder(service, files, studentFolder)
+
+    clean()
   
   except HttpError as error:
     # TODO(developer) - Handle errors from drive API.
