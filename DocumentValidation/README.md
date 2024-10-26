@@ -27,6 +27,8 @@ The inclusion of these robust tools would be the most optimal way to integrate w
 ### Other Potential Options
 Local options exist as well which utilize Machine Learning Packages (Keras, PyTorch, etc.) or Computer Vision (OpenCV) to determine if certain features exist within a document. These tools may be used to verify a transcript is official, but likely will be unhelpful for anything more. These tools could be helpful for determining if a document is blurry or invalid for some other, more obvious reason. 
 
+
+## TL;DR
 Here are some issues and recommendations:
 - The current configuration is unable to determine image quality.
   - OpenCV provides excellent tools (one of which is partially implemented in the **TranscriptVal.py** file in the Laplassian function for detecting blur).
