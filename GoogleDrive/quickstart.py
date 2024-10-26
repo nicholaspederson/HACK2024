@@ -38,7 +38,7 @@ def getCreds():
   return creds
 
 def getInfo():
-  return None
+  return StudentData()
 
 # parses studentInfo to generate
 # appropriate file names
@@ -149,12 +149,13 @@ def main():
 
     name = getStudentName(studentInfo)
 
-    studentFolder = createFolder(service, folderName)
+    folderName = getFolderName(studentInfo)
 
     studentFolder = createFolder(service, folderName)
 
     populateFolder(service, files, name, studentFolder)
 
+    sheetID = "1WGz4bI5ioohrY6hDr7KH01k_zXNTG1VgKbc_RtLknOc"
     populateSheet(sheetsService, sheetID, studentInfo)
 
     clean()
