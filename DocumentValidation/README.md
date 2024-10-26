@@ -1,6 +1,11 @@
 # Document Validation Team Documentation
 
 ## Current Implementation
+### Outlined Structure
+Our Document validation system takes student data (a .json file) as input. Then to validate a transcript we converted each pdf image into the form of text. For this transcript string produced, we search for the expected student data, and flag (add the attribute name to a list) each instance where student information is not found within the converted text. A flag is then paired with student data for output into the google drive team.
+
+### Technical Tools
+In our implementation of the document validation system, we used the Tesseract and OpenCV to read text off of a pdf. OpenCV was utilized to convert the pdf into a png file. Tesseract then takes the png file and extracts readable text elements to be compared against the given student data.
 
 ## Future Recommendations
 ### Overview

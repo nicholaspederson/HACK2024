@@ -106,9 +106,8 @@ class TranscriptVal:
 
         # Compare attributes from studentData with transcript
         for attribute in vars(self.studentData):
-            if attribute != "flag":
-                if getattr(self.studentData, attribute) not in self.transcript_data.lower():
-                    discrepancies.append(attribute)
+            if getattr(self.studentData, attribute) not in self.transcript_data.lower():
+                discrepancies.append(attribute)
 
         return discrepancies
 

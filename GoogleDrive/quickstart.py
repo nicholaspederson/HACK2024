@@ -134,11 +134,21 @@ def createFolder(service, folderName):
 
 
 # populates the sheet with the student information
-def populateSheet(sheetsService, studentInfo):
+def populateSheet(sheetsService, studentInfo, flags):
     # values to put in the row, left to right
+    flagString = ""
+    count = 1
+    for fileFlags in flags:
+        if fileFlags:
+            if count == 1:
+                flagString += "file" + count
+            else:
+                flagString += ", file" + count
+        count += 1
     values = [
         [
-            "",  # flags
+            "", # to not be filled
+            flagString,  # flags
             "",  # additional notes
             studentInfo.first_name,  # first name
             studentInfo.last_name,  # last name
@@ -168,14 +178,16 @@ def populateSheet(sheetsService, studentInfo):
     # body is the data
     sheetsService.spreadsheets().values().append(
         spreadsheetId="1WGz4bI5ioohrY6hDr7KH01k_zXNTG1VgKbc_RtLknOc",
-        range="Fields!B5:Z",
+        range="Fields!B3:Z",
         valueInputOption="USER_ENTERED",
         body=body,
     ).execute()
     return None
 
-
-def main(studentInfo):
+#student info is an instance of StudentData
+#files is a list of files
+#flags is a list of a list of strings for each file
+def main(studentInfo, files, flags):
     # asks user to authenticate their identity
     # we use the credentials to access the API
     creds = getCreds()
@@ -194,12 +206,11 @@ def main(studentInfo):
         # creates the folder in the drive with the given name
         studentFolder = createFolder(service, folderName)
         # sample file since this is not conencted to the API
-        # files = [open("GoogleDrive\\sample.pdf", "r", encoding='latin-1')]
         # populates the created folder with files
         # files should be included in the API call from the front-end
-        # populateFolder(service, files, name, studentFolder)
+        populateFolder(service, files, name, studentFolder)
         # populates the google sheet with the student info
-        populateSheet(sheetsService, studentInfo)
+        populateSheet(sheetsService, studentInfo, flags)
 
     except HttpError as error:
         # TODO(developer) - Handle errors from drive API.
@@ -208,4 +219,5 @@ def main(studentInfo):
 
 
 if __name__ == "__main__":
-    main(None)
+    temp = StudentData.parse_raw("""{"first_name":"A","middle_name":"B", "last_name":"C", "additional_name":"D", "gender":"E", "dob":"F","degree_level":"G","degree_program":"H","email":"I","country1":"J","country2":"K","country3":"L"}""")
+    main(temp, [], [[]])

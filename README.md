@@ -13,3 +13,9 @@ The document validation scripts define a class used by the Google Drive API sect
 
 ### Document Validation
 **TranscriptVal.py** defines a class that creates an object for evaluating a document. This class defines methods for validating the information students provide against the transcript they uploaded. The current implementation is based on Tesseract and converts a PDF to a text string which is searched for relevant information. Each aspect of the transcript outlined is checked and provided with a flag denoting if an issue has been found. Should the student data have discrepancies, the student data object is updated with flags corresponding the issues.
+
+## Front End Team
+### Details
+The web page contains two pages. The student page contains all of the information and file uploads that a student would need to fill out. All inputs are required except the additional name field. Additionally, the issuing country fields are only required there are multiple transcripts provided. This means that country 1 is always required and the other countries are only required if that number of transcripts is provided. The UI does not actually make the fields required. However, the API call will only be successful if these rules are followed.
+
+The degree level is not inserted by the student. Instead, the degree level is obtained from the degree program field.
