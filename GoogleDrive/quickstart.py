@@ -7,7 +7,9 @@ from google.auth.transport.requests import Request # type: ignore
 from google.oauth2.credentials import Credentials # type: ignore
 from google_auth_oauthlib.flow import InstalledAppFlow # type: ignore
 from googleapiclient.discovery import build # type: ignore
-from googleapiclient.errors import HttpError # type: ignore
+from googleapiclient.errors import HttpError
+
+from DocumentValidation.student_data import StudentData # type: ignore
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/drive"]
@@ -63,13 +65,21 @@ def populateFolder(service, files, name, studentFolder):
     f = service.files().create(body=fileMetaData, media_body=media, fields='id, name').execute()
   return None
 
-# gets the appropriate student name from
-# student info
+# returns the name for the file (appropriate student name from)
+# student info - instance of the StudentData class
 # format: LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country
-def getFolderName(studentInfo):
+def getFolderName(studentInfo: StudentData):
+  filename = ""
   if studentInfo == None:
-    return "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country"
-  return ""
+
+    filename = "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country"
+  else:
+    filename = str(studentInfo.last_name + "_" + 
+                   studentInfo.first_name + "_" + 
+                   studentInfo.mid_name + "_" + 
+                   studentInfo.degree_program + "-" + 
+                   studentInfo.country)
+  return filename
 
 # make the folder in a specific parent
 # by using the parent's file ID
