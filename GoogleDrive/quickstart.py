@@ -29,6 +29,8 @@ def getCreds():
       creds.refresh(Request())
     else:
       flow = InstalledAppFlow.from_client_secrets_file(
+          #credentials contains the information such that if it is not secure it
+          #can allow a third party to impersonate the app
           "GoogleDrive/credentials.json", SCOPES
       )
       creds = flow.run_local_server(port=0)
@@ -150,7 +152,7 @@ def populateSheet(sheetsService, sheetID, studentInfo):
         ).execute()
   return None
 
-def main():
+def main(studentInfo):
   #asks user to authenticate their identity
   #we use the credentials to access the API
   creds = getCreds()
@@ -160,9 +162,6 @@ def main():
     service = build("drive", "v3", credentials=creds)
     #to access sheets API
     sheetsService = build("sheets", "v4", credentials=creds)
-    #how we get the student data to use
-    #should be included in the API call from the front-end
-    studentInfo = getInfo()
     #uses studentInnfo to get the FirstName_LastName of the student
     name = getStudentName(studentInfo)
     #uses studentInfo to generate the
@@ -186,4 +185,4 @@ def main():
 
 
 if __name__ == "__main__":
-  main()
+  main(None)
