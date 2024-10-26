@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs'
 import Button from 'react-bootstrap/Button';
@@ -18,6 +18,34 @@ function App() {
   const [country, setCountry] = useState("");
   const [degreeType, setDegreeType] = useState("");
 
+  const [nationalID, setNationalID] = useState("");
+  const [transcript1, setTranscript1] = useState("")
+  const [transcript2, setTranscript2] = useState("")
+  const [transcript3, setTranscript3] = useState("")
+
+
+
+
+  function nationalIDChange(e:any){
+    setNationalID(e.target.files[0])
+    console.log(nationalID)
+  }
+
+  function transcriptOneChange(e:any){
+    setTranscript3(e.target.files[0])
+    console.log(transcript1)
+  }
+
+  function transcriptTwoChange(e:any){
+    setTranscript2(e.target.files[0])
+    console.log(transcript2)
+  }
+
+  function transcriptThreeChange(e:any){
+    setTranscript3(e.target.files[0])
+    console.log(transcript3)
+  }
+
 
   useEffect(() => {
     if (degreeProgram === "Associate of Arts, General Education" || degreeProgram === "Associate of Ministerial Leadership" || degreeProgram === "Bachelor of Business Administration" || degreeProgram === "Bachelor of Science, Business & Professional Leadership" || degreeProgram === "Bachelor of Science, Communication & Mass Media" || degreeProgram === "Bachelor of Science, Digital Media & Design" || degreeProgram === "Bachelor of Science, Global Education Studies" || degreeProgram === "Bachelor of Science, Human Services" || degreeProgram === "Bachelor of Science, Ministerial Leadership: Biblical Studies" || degreeProgram === "Bachelor of Science, Ministerial Leadership: Christian Ministry" || degreeProgram === "Bachelor of Science, Ministerial Leadership: Pastoral Care and Counseling" || degreeProgram === "Bachelor of Science, Organizational Leadership" || degreeProgram === "Bachelor of Science, Psychology") {
@@ -35,7 +63,7 @@ function App() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    let studentData = { fName: fName, mName: mName, lName: lName, gender: gender, dob: dob, country: country, degreeType: degreeType }
+    let studentData = { fName: fName, mName: mName, lName: lName, gender: gender, dob: dob, country: country, degreeType: degreeType, nationalID: nationalID, transcript1: transcript1, transcript2: transcript2, transcript3: transcript3 }
     console.log(studentData);
   }
 
@@ -145,38 +173,52 @@ function App() {
               </Form.Select>
             </Form.Group>
           </Row>
-          <Row className="mt-5">
 
+            <Form.Label>    </Form.Label>
+            <Form.Label className="pt-5 form-control-lg">All documents must be submitted in .pdf format. </Form.Label>
+            <Form.Label className="pt-1 form-control-lg">If you are unable to convert your documents to a .pdf, please email them directly to admissions@miscio.io</Form.Label>
+            <Form.Group className="mt-5">
+              <Form.Label htmlFor="formFileLg" className="form-label">National ID</Form.Label>
+              <Form.Control type="file" accept="application/pdf" onChange= {nationalIDChange}/>
+            </Form.Group>
+          <Row className="mt-3">
+            <Form.Group as={Col} className="mt-5">
+              <Form.Label htmlFor="formFileLg" className="form-label">Transcript</Form.Label>
+              <Form.Control type="file" accept="application/pdf" required onChange={transcriptOneChange}/>
+            </Form.Group>
+
+            <Form.Group as={Col} className="mt-5">
+              <Form.Label htmlFor="formFileLg" className="form-label">Transcript 2</Form.Label>
+              <Form.Control type="file" accept="application/pdf" onChange={transcriptTwoChange}/>
+            </Form.Group>
+    
+            <Form.Group as={Col} className="mt-5">
+              <Form.Label htmlFor="formFileLg" className="form-label">Transcript 3</Form.Label>
+              <Form.Control type="file" accept="application/pdf" onChange={transcriptThreeChange}/>
+            </Form.Group>
+          </Row>
+          <Row className="mt-3">
+            <Form.Group as={Col} className="mr-3" controlId="countryTranscript1">
+              <Form.Label>Issuing Country</Form.Label>
+              <Form.Control type="text" placeholder="Country" />
+            </Form.Group>
+            <Form.Group as={Col} className="mr-3" controlId="countryTranscript2">
+              <Form.Label>Issuing Country</Form.Label>
+              <Form.Control type="text" placeholder="Country" />
+            </Form.Group>
+            <Form.Group as={Col} className="mr-3" controlId="countryTranscript3">
+              <Form.Label>Issuing Country</Form.Label>
+              <Form.Control type="text" placeholder="Country" />
+            </Form.Group>
+          </Row>
+          <Row className="mt-5">
             <Form.Label>{degreeLevel}</Form.Label>
             <Button variant="primary" type="submit">Submit</Button>
           </Row>
         </Form>
       </Tab>
       <Tab eventKey="validation" title="Validation">
-          <Form>
-            <Form.Label className="pt-5 form-control-lg">All documents must be submitted in .pdf format. </Form.Label>
-            <Form.Label className="pt-1 form-control-lg">If you are unable to convert your documents to a .pdf, please email them directly to admissions@miscio.io</Form.Label>
-            <Form.Group className="mt-5">
-              <Form.Label htmlFor="formFileLg" className="form-label">National ID</Form.Label>
-              <Form.Control type="file" accept="application/pdf"/>
-            </Form.Group>
-          <Row className="mt-3">
-            <Form.Group as={Col} className="mt-5">
-              <Form.Label htmlFor="formFileLg" className="form-label">Transcript</Form.Label>
-              <Form.Control type="file" accept="application/pdf" required/>
-            </Form.Group>
-
-            <Form.Group as={Col} className="mt-5">
-              <Form.Label htmlFor="formFileLg" className="form-label">Transcript 2</Form.Label>
-              <Form.Control type="file" accept="application/pdf"/>
-            </Form.Group>
-    
-            <Form.Group as={Col} className="mt-5">
-              <Form.Label htmlFor="formFileLg" className="form-label">Transcript 3</Form.Label>
-              <Form.Control type="file" accept="application/pdf"/>
-            </Form.Group>
-          </Row>
-        </Form>
+          
       </Tab>
     </Tabs>
   )
