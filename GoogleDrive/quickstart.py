@@ -8,7 +8,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow # type: ignore
 from googleapiclient.discovery import build # type: ignore
 from googleapiclient.errors import HttpError # type: ignore
 
-from DocumentValidation.student_data import StudentData
+from DocumentValidation.StudentData import StudentData
 
 # If modifying these scopes, delete the file token.json.
 #this scope gives all access to all modifications in drive
