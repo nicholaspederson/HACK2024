@@ -1,9 +1,7 @@
-name: Deploy to Google Cloud Run
+name: Deploy to Google Cloud
 
 on:
-  push:
-    tags:
-      - workflow_dispatch
+  - workflow_dispatch
 
 jobs:
   deploy:
