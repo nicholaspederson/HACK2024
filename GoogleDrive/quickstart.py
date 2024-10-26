@@ -36,6 +36,8 @@ def getCreds():
       token.write(creds.to_json())
   return creds
 
+#how we are getting the instance of a class which
+#contains the student data
 def getInfo():
   return StudentData()
 
@@ -43,31 +45,42 @@ def getInfo():
 # appropriate file names
 # return in format FirstName_LastName
 def getStudentName(studentInfo: StudentData):
+  #default student name
   studentName = ""
+  #no info, default name
   if studentInfo == None:
     studentName = "FirstName_LastName"
   else:
+    #combine first and last name concatenateb by an underscore
     studentName = str(studentInfo.first_name + "_" + studentInfo.last_name)
   return studentName
 
 # prepends the name to each file
 def populateFolder(service, files, name, studentFolder):
+  #for each submitted file
   for file in files:
-    #fileName = file.name.split('\\')[-1]
+    #prepare metadata for the file to be created in drive
+    #set the metadata, assumes the file is a pdf
+    #name of the file gives format FirstName_LastName_FileName
     fileMetaData = {"name": name+"_"+file.name.split('\\')[-1], "mimeType": "application/pdf", "parents": [studentFolder]}
+    #the content of the file in drive is the same as the file we are
+    #looking at
     media = MediaFileUpload(file.name, resumable=True)
-    f = service.files().create(body=fileMetaData, media_body=media, fields='id, name').execute()
+    #create the file in drive
+    service.files().create(body=fileMetaData, media_body=media, fields='id, name').execute()
   return None
 
 # returns the name for the file (appropriate student name from)
 # student info - instance of the StudentData class
 # format: LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country
 def getFolderName(studentInfo: StudentData):
+  #default file name
   filename = ""
+  #no info, default name
   if studentInfo == None:
-
     filename = "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country"
   else:
+    #combine relevent data separated by _
     filename = str(studentInfo.last_name + "_" + 
                    studentInfo.first_name + "_" + 
                    studentInfo.mid_name + "_" + 
@@ -84,17 +97,19 @@ def createFolder(service, folderName):
   # place holder name
   if folderName == "":
     folderName = "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country"
+  #name is folder name
+  #type is folder
+  #parent is the specified folder ID
   file_metadata = {"name": folderName,
                      "mimeType": "application/vnd.google-apps.folder",
                       "parents": ["1o0f25LLI9rtfjMGkfMJn6l-fDkXTKfOt"]}
-
-  # pylint: disable=maybe-no-member
+  #creates the folder as specified
   file = service.files().create(body=file_metadata, fields="id").execute()
   return file.get("id")
 
 # populates
 def populateSheet(sheetsService, sheetID, studentInfo):
-  sheet = sheetsService.spreadsheets()
+  #values to put in the row, left to right
   values = [
     [
       "", #flags
@@ -119,42 +134,48 @@ def populateSheet(sheetsService, sheetID, studentInfo):
       "", #country associated with file 4
     ],
   ]
+  #prepares data to be passed to the API
   body = {"values":values}
-  result = (
-        sheetsService.spreadsheets()
-        .values()
-        .append(
-            spreadsheetId=sheetID,
+  #adds the data to the specified spreadsheet ID
+  #range is the sheet Fields, and everything past B5 (down and right)
+  #we act as if the data was entered by a user
+  #body is the data
+  sheetsService.spreadsheets().values().append(
+            spreadsheetId="1WGz4bI5ioohrY6hDr7KH01k_zXNTG1VgKbc_RtLknOc",
             range="Fields!B5:Z",
             valueInputOption="USER_ENTERED",
             body=body,
-        )
-        .execute()
-    )
+        ).execute()
   return None
 
 def main():
+  #asks user to authenticate their identity
+  #we use the credentials to access the API
   creds = getCreds()
 
   try:
+    #to access drive API
     service = build("drive", "v3", credentials=creds)
+    #to access sheets API
     sheetsService = build("sheets", "v4", credentials=creds)
-
+    #how we get the student data to use
+    #should be included in the API call from the front-end
     studentInfo = getInfo()
-
-    #flags = validate(files, studentInfo)
-
+    #uses studentInnfo to get the FirstName_LastName of the student
     name = getStudentName(studentInfo)
-
+    #uses studentInfo to generate the
+    #LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country
+    #folder name
     folderName = getFolderName(studentInfo)
-
+    #creates the folder in the drive with the given name
     studentFolder = createFolder(service, folderName)
-
-    files = [open("GoogleDrive\sample.pdf", "r", encoding='latin-1')]
+    #sample file since this is not conencted to the API
+    files = [open("GoogleDrive\\sample.pdf", "r", encoding='latin-1')]
+    #populates the created folder with files
+    #files should be included in the API call from the front-end
     populateFolder(service, files, name, studentFolder)
-
-    sheetID = "1WGz4bI5ioohrY6hDr7KH01k_zXNTG1VgKbc_RtLknOc"
-    populateSheet(sheetsService, sheetID, studentInfo)
+    #populates the google sheet with the student info
+    populateSheet(sheetsService, studentInfo)
   
   except HttpError as error:
     # TODO(developer) - Handle errors from drive API.
