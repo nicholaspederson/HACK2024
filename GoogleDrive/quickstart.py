@@ -112,7 +112,7 @@ def createFolder(service, folderName):
   return file.get("id")
 
 # populates the sheet with the student information
-def populateSheet(sheetsService, sheetID, studentInfo):
+def populateSheet(sheetsService, studentInfo):
   #values to put in the row, left to right
   values = [
     [
