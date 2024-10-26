@@ -23,6 +23,11 @@ function App() {
   const [transcript2, setTranscript2] = useState("")
   const [transcript3, setTranscript3] = useState("")
 
+  const [country1, setCountry1] = useState("")
+  const [country2, setCountry2] = useState("")
+  const [country3, setCountry3] = useState("")
+
+
 
 
 
@@ -63,7 +68,7 @@ function App() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    let studentData = { fName: fName, mName: mName, lName: lName, gender: gender, dob: dob, country: country, degreeType: degreeType, nationalID: nationalID, transcript1: transcript1, transcript2: transcript2, transcript3: transcript3 }
+    let studentData = { fName: fName, mName: mName, lName: lName, gender: gender, dob: dob, degreeType: degreeType, nationalID: nationalID, transcript1: transcript1, transcript2: transcript2, transcript3: transcript3, country1: country1, country2:country2, country3: country3 }
     console.log(studentData);
   }
 
@@ -79,17 +84,17 @@ function App() {
 
       <Tab eventKey="student" title="Student">
         <Form noValidate onSubmit={handleSubmit}>
-          <Row className="pt-5">
+          <Row className="mt-5">
             <Form.Group as={Col} className="mr-3" controlId="firstNameCon">
-              <Form.Label>First Name</Form.Label>
+              <Form.Label><br/>First Name</Form.Label>
               <Form.Control type="text" placeholder="First Name" value={fName} onChange={(e) => setFname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="middleNameCon">
-              <Form.Label>Middle Name</Form.Label>
+              <Form.Label><br/>Middle Name</Form.Label>
               <Form.Control type="middleName" placeholder="Middle Name" value={mName} onChange={(e) => setMname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="lastNameCon">
-              <Form.Label>Last Name</Form.Label>
+              <Form.Label><br/>Last Name</Form.Label>
               <Form.Control type="lastName" placeholder="Last Name" value={lName} onChange={(e) => setLname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="additionalNameCon">
@@ -112,12 +117,6 @@ function App() {
             <Form.Group as={Col} className="mr-3" controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control type="text" placeholder="example@mail.com" />
-            </Form.Group>
-          </Row>
-          <Row className="pt-5">
-            <Form.Group as={Col} className="mr-3" controlId="country">
-              <Form.Label>Country of Education</Form.Label>
-              <Form.Control type="country" placeholder="Country" />
             </Form.Group>
           </Row>
           <Row className="pt-5">
@@ -173,26 +172,23 @@ function App() {
               </Form.Select>
             </Form.Group>
           </Row>
-
-            <Form.Label>    </Form.Label>
-            <Form.Label className="pt-5 form-control-lg">All documents must be submitted in .pdf format. </Form.Label>
-            <Form.Label className="pt-1 form-control-lg">If you are unable to convert your documents to a .pdf, please email them directly to admissions@miscio.io</Form.Label>
-            <Form.Group className="mt-5">
-              <Form.Label htmlFor="formFileLg" className="form-label">National ID</Form.Label>
+            <Form.Label className="pt-3 form-control-md"><br/><br/>All documents must be submitted in .pdf format. <br/>If you are unable to convert your documents to a .pdf, <br/>please email them directly to admissions@miscio.io</Form.Label>
+            <Form.Group className="mt-3">
+              <Form.Label htmlFor="formFileLg" className="form-label-lg">National ID</Form.Label>
               <Form.Control type="file" accept="application/pdf" onChange= {nationalIDChange}/>
             </Form.Group>
           <Row className="mt-3">
-            <Form.Group as={Col} className="mt-5">
+            <Form.Group as={Col} className="mr-3">
               <Form.Label htmlFor="formFileLg" className="form-label">Transcript</Form.Label>
               <Form.Control type="file" accept="application/pdf" required onChange={transcriptOneChange}/>
             </Form.Group>
 
-            <Form.Group as={Col} className="mt-5">
+            <Form.Group as={Col} className="mr-3">
               <Form.Label htmlFor="formFileLg" className="form-label">Transcript 2</Form.Label>
               <Form.Control type="file" accept="application/pdf" onChange={transcriptTwoChange}/>
             </Form.Group>
     
-            <Form.Group as={Col} className="mt-5">
+            <Form.Group as={Col} className="mr-3">
               <Form.Label htmlFor="formFileLg" className="form-label">Transcript 3</Form.Label>
               <Form.Control type="file" accept="application/pdf" onChange={transcriptThreeChange}/>
             </Form.Group>
@@ -200,25 +196,21 @@ function App() {
           <Row className="mt-3">
             <Form.Group as={Col} className="mr-3" controlId="countryTranscript1">
               <Form.Label>Issuing Country</Form.Label>
-              <Form.Control type="text" placeholder="Country" />
+              <Form.Control type="text" placeholder="Country" value={country1} onChange={(e) => setCountry1(e.target.value)}/>
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="countryTranscript2">
               <Form.Label>Issuing Country</Form.Label>
-              <Form.Control type="text" placeholder="Country" />
+              <Form.Control type="text" placeholder="Country" value={country2} onChange={(e) => setCountry2(e.target.value)}/>
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="countryTranscript3">
               <Form.Label>Issuing Country</Form.Label>
-              <Form.Control type="text" placeholder="Country" />
+              <Form.Control type="text" placeholder="Country" value={country3} onChange={(e) => setCountry3(e.target.value)}/>
             </Form.Group>
           </Row>
           <Row className="mt-5">
-            <Form.Label>{degreeLevel}</Form.Label>
             <Button variant="primary" type="submit">Submit</Button>
           </Row>
         </Form>
-      </Tab>
-      <Tab eventKey="validation" title="Validation">
-          
       </Tab>
     </Tabs>
   )
