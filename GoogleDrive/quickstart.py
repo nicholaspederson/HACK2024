@@ -55,7 +55,8 @@ def getStudentName(studentInfo: StudentData):
     studentName = str(studentInfo.first_name + "_" + studentInfo.last_name)
   return studentName
 
-# prepends the name to each file
+#Goes through all the files, and adds them to the folder
+#Changes all of the names to the correct name
 def populateFolder(service, files, name, studentFolder):
   #for each submitted file
   for file in files:
@@ -107,7 +108,7 @@ def createFolder(service, folderName):
   file = service.files().create(body=file_metadata, fields="id").execute()
   return file.get("id")
 
-# populates
+# populates the sheet with the student information
 def populateSheet(sheetsService, sheetID, studentInfo):
   #values to put in the row, left to right
   values = [
@@ -179,6 +180,7 @@ def main():
   
   except HttpError as error:
     # TODO(developer) - Handle errors from drive API.
+    #We are assuming proper input
     print(f"An error occurred: {error}")
 
 
