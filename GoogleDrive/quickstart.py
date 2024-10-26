@@ -93,7 +93,7 @@ def createFolder(service, folderName):
   file = service.files().create(body=file_metadata, fields="id").execute()
   return file.get("id")
 
-# populates
+# populates the sheet with the student information
 def populateSheet(sheetsService, sheetID, studentInfo):
   sheet = sheetsService.spreadsheets()
   values = [
@@ -159,6 +159,7 @@ def main():
   
   except HttpError as error:
     # TODO(developer) - Handle errors from drive API.
+    #We are assuming proper input
     print(f"An error occurred: {error}")
 
 
