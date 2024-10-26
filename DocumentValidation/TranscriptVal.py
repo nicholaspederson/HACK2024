@@ -32,6 +32,7 @@ class TranscriptVal:
         # Load and store transcript data
         self.transcript_data = self.extract_text_from_pdf()
 
+    ''' Not in use '''
     def is_blurry(self, image):
         """Checks if an image is blurry based on the Laplacian variance method.
         Input:
@@ -66,6 +67,7 @@ class TranscriptVal:
 
         return text
 
+    ''' Not in use '''
     def load_transcript(self, path):
         """Loads transcript data from a PDF file using Tesseract OCR if pages are not blurry.
         Input:
