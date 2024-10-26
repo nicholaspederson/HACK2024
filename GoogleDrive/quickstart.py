@@ -11,6 +11,7 @@ from googleapiclient.errors import HttpError # type: ignore
 from DocumentValidation.student_data import StudentData
 
 # If modifying these scopes, delete the file token.json.
+#this scope gives all access to all modifications in drive
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 
 # looks for existing token, or asks user to verify and generate a token
