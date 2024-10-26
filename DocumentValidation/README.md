@@ -26,3 +26,17 @@ The inclusion of these robust tools would be the most optimal way to integrate w
 
 ### Other Potential Options
 Local options exist as well which utilize Machine Learning Packages (Keras, PyTorch, etc.) or Computer Vision (OpenCV) to determine if certain features exist within a document. These tools may be used to verify a transcript is official, but likely will be unhelpful for anything more. These tools could be helpful for determining if a document is blurry or invalid for some other, more obvious reason. 
+
+
+## TL;DR
+Here are some issues and recommendations:
+- The current configuration is unable to determine image quality.
+  - OpenCV provides excellent tools (one of which is partially implemented in the **TranscriptVal.py** file in the Laplassian function for detecting blur).
+- The current configuration cannot handle lower quality scans, distorted images, etc.
+  - Google's Document AI API would provide some excellent tools for getting this data at low cost. This option also has the benefit of Google's ongoing support and continued improvement.
+- The current configuration provides no information to the student on issues.
+  - Eventually this portion could be converted to give live feedback. Integration with the AI assistant in development is one possible solution or simple preprogrammed statements hard coded could provide some feedback.
+  - Google's Document AI should be able to identify where in an image a given text-field was pulled from, allowing for a potential to highlight issues in the document to the student and provide meaningful feedback with a visual component to help a student locate issues or forcing them to reupload to get a better result. I was unable to find much documentation on this last portion, but I am relatively confident it can be done :)
+- The current configuration is fairly rigid and scales poorly
+  - Conversion to API tools and implementation of a database for student data (rather than a Google sheet) would correct this issue. We looked into a NOSQL implementation using MongoDB/Atlas on Amazon Web Services or Azure. ChatGPT is very helpful for this, and the process is free.
+  - We explored making an API using FastAPI or Flask, either of which could generate a better backend. We were told to ensure no connection data was in the code but was a secret injected by the webserver. 

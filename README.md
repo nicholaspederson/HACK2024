@@ -19,3 +19,8 @@ The document validation scripts define a class used by the Google Drive API sect
 The web page contains two pages. The student page contains all of the information and file uploads that a student would need to fill out. All inputs are required except the additional name field. Additionally, the issuing country fields are only required there are multiple transcripts provided. This means that country 1 is always required and the other countries are only required if that number of transcripts is provided. The UI does not actually make the fields required. However, the API call will only be successful if these rules are followed.
 
 The degree level is not inserted by the student. Instead, the degree level is obtained from the degree program field.
+
+### How to run
+Run the following commands while in the FE directory to view the front end:
+1. NPM install
+2. NPM run dev
