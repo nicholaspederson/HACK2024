@@ -15,7 +15,6 @@ function App() {
   const [lName, setLname] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
-  const [country, setCountry] = useState("");
   const [email, setEmail] = useState("");
   const [addlName, setAddlname] = useState("");
 
@@ -38,7 +37,7 @@ function App() {
   }
 
   function transcriptOneChange(e:any){
-    setTranscript3(e.target.files[0])
+    setTranscript1(e.target.files[0])
     console.log(transcript1)
   }
 
@@ -98,7 +97,7 @@ function App() {
         <Form noValidate onSubmit={handleSubmit}>
           <Row className="mt-5">
             <Form.Group as={Col} className="mr-3" controlId="firstNameCon">
-              <Form.Label><br/>First Name</Form.Label>
+              <Form.Label><br/>First Name (Given name)</Form.Label>
               <Form.Control type="text" placeholder="First Name" value={fName} onChange={(e) => setFname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="middleNameCon">
@@ -106,7 +105,7 @@ function App() {
               <Form.Control type="text" placeholder="Middle Name" value={mName} onChange={(e) => setMname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="lastNameCon">
-              <Form.Label><br/>Last Name</Form.Label>
+              <Form.Label><br/>Last Name (Surname)</Form.Label>
               <Form.Control type="text" placeholder="Last Name" value={lName} onChange={(e) => setLname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="additionalNameCon">
@@ -186,14 +185,14 @@ function App() {
               </Form.Select>
             </Form.Group>
           </Row>
-            <Form.Label className="pt-3 form-control-sm"><br/><br/>All documents must be submitted in .pdf format. <br/>If you are unable to convert your documents to a .pdf, <br/>please email them directly to admissions@miscio.io</Form.Label>
+            <Form.Label className="pt-3 form-control-sm"><br/><br/>All documents must be submitted in .pdf format. <br/>If you are unable to convert your documents to a .pdf, <br/>please email them directly to transcripts@miscio.io</Form.Label>
             <Form.Group className="mt-3">
               <Form.Label htmlFor="formFileLg" className="form-label-lg">National ID</Form.Label>
               <Form.Control type="file" accept="application/pdf" onChange= {nationalIDChange}/>
             </Form.Group>
           <Row className="mt-5">
             <Form.Group as={Col} className="mr-3  border border-dark border-bottom-0 border-top-0">
-              <Form.Label htmlFor="formFileLg" className="form-label">Transcript</Form.Label>
+              <Form.Label htmlFor="formFileLg" className="form-label">Transcript 1</Form.Label>
               <Form.Control type="file" accept="application/pdf" required onChange={transcriptOneChange}/>
             </Form.Group>
 
