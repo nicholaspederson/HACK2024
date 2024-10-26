@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the code and install dependencies
 COPY . /app
-RUN pip install fastapi uvicorn
+RUN pip install fastapi uvicorn pydantic
 
 # Expose the port and run the server
 EXPOSE 8080
