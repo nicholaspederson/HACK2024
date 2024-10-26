@@ -1,10 +1,15 @@
 import os.path
+import shutil
+
+from apiclient.http import MediaFileUpload #type:ignore
 
 from google.auth.transport.requests import Request # type: ignore
 from google.oauth2.credentials import Credentials # type: ignore
 from google_auth_oauthlib.flow import InstalledAppFlow # type: ignore
 from googleapiclient.discovery import build # type: ignore
-from googleapiclient.errors import HttpError # type: ignore
+from googleapiclient.errors import HttpError
+
+from DocumentValidation.student_data import StudentData # type: ignore
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/drive"]
@@ -32,18 +37,7 @@ def getCreds():
       token.write(creds.to_json())
   return creds
 
-# gets the submitted files
-def getFiles():
-  return None
-
-# utilizse an API to call to a databse
-# with the given unique identifier
-# to get relevant student info
 def getInfo():
-  return None
-
-# validates the student info, and reutrns flags
-def validate(files, studentInfo):
   return None
 
 # parses studentInfo to generate
@@ -54,17 +48,32 @@ def getStudentName(studentInfo):
     return "FirstName_LastName"
   return ""
 
-# populates the given folder with new file names
-def populateFolder(files, name):
+# prepends the name to each file
+def populateFolder(service, files, name, studentFolder):
+  for file in files:
+    new_file = open(name, 'w')
+    shutil.copyfileobj(file, new_file)
+    fileMetaData = {"name": name, "mimeType": "application/pdf", "parents": [studentFolder]}
+    media = MediaFileUpload(name, resumable=True)
+    f = service.files().create(body=fileMetaData, media_body=media, fields='id, name').execute()
   return None
 
-# gets the appropriate student name from
-# student info
+# returns the name for the file (appropriate student name from)
+# student info - instance of the StudentData class
 # format: LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country
-def getFolderName(studentInfo):
+def getFolderName(studentInfo: StudentData):
+  filename = ""
   if studentInfo == None:
-    return "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country"
-  return ""
+
+    filename = "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country"
+  else:
+    filename = str(studentInfo.last_name + "_" + 
+                   studentInfo.first_name + "_" + 
+                   studentInfo.mid_name + "_" + 
+                   studentInfo.degree_program + "-" + 
+                   studentInfo.country)
+  return filename
+
 # make the folder in a specific parent
 # by using the parent's file ID
 # service: access to google drive API
@@ -121,10 +130,6 @@ def populateSheet(sheetsService, sheetID, studentInfo):
         )
         .execute()
     )
-  
-  #rows = result.get("values")
-  #print(f"{len(rows)} rows retrieved")
-  #print(rows)
   return None
 
 # whatever cleaning may or may not need to happen
@@ -138,22 +143,18 @@ def main():
     service = build("drive", "v3", credentials=creds)
     sheetsService = build("sheets", "v4", credentials=creds)
 
-    #files = getFiles()
-
-    #studentInfo = getInfo()
+    studentInfo = getInfo()
 
     #flags = validate(files, studentInfo)
 
-    #name = getStudentName(studentInfo)
+    name = getStudentName(studentInfo)
 
-    studentInfo = None
-    #folderName = getFolderName(studentInfo)
+    studentFolder = createFolder(service, folderName)
 
-    #studentFolder = createFolder(service, folderName)
+    studentFolder = createFolder(service, folderName)
 
-    #populateFolder(service, files, name, studentFolder)
-    
-    sheetID = "1WGz4bI5ioohrY6hDr7KH01k_zXNTG1VgKbc_RtLknOc"
+    populateFolder(service, files, name, studentFolder)
+
     populateSheet(sheetsService, sheetID, studentInfo)
 
     clean()

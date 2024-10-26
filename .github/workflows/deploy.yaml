@@ -1,0 +1,41 @@
+name: Deploy to Google Cloud
+
+on:
+  - workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v4
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Build and Push Docker Image to Google Container Registry
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+        run: |
+          IMAGE_NAME=gcr.io/${{ env.GCP_PROJECT_ID }}/transcript-app:${{ github.ref_name }}
+          docker build -t $IMAGE_NAME api/
+          docker push $IMAGE_NAME
+
+      - name: Deploy to Google Cloud Run
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+        run: |
+          IMAGE_NAME=gcr.io/${{ env.GCP_PROJECT_ID }}/transcript-app:${{ github.ref_name }}
+          gcloud run deploy transcript-app \
+            --image $IMAGE_NAME \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated
