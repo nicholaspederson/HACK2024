@@ -42,10 +42,13 @@ def getInfo():
 # parses studentInfo to generate
 # appropriate file names
 # return in format FirstName_LastName
-def getStudentName(studentInfo):
+def getStudentName(studentInfo: StudentData):
+  studentName = ""
   if studentInfo == None:
-    return "FirstName_LastName"
-  return ""
+    studentName = "FirstName_LastName"
+  else:
+    studentName = str(studentInfo.first_name + "_" + studentInfo.last_name)
+  return studentName
 
 # prepends the name to each file
 def populateFolder(service, files, name, studentFolder):
