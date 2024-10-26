@@ -39,7 +39,11 @@ def getFiles():
 # utilizse an API to call to a databse
 # with the given unique identifier
 # to get relevant student info
-def getInfo(UID):
+def getInfo():
+  return None
+
+# validates the student info, and reutrns flags
+def validate(files, studentInfo):
   return None
 
 # parses studentInfo to generate
@@ -50,8 +54,8 @@ def getStudentName(studentInfo):
     return "FirstName_LastName"
   return ""
 
-# prepends the name to each file
-def renameFiles(files, name):
+# populates the given folder with new file names
+def populateFolder(files, name):
   return None
 
 # gets the appropriate student name from
@@ -61,7 +65,6 @@ def getFolderName(studentInfo):
   if studentInfo == None:
     return "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country"
   return ""
-
 # make the folder in a specific parent
 # by using the parent's file ID
 # service: access to google drive API
@@ -77,11 +80,51 @@ def createFolder(service, folderName):
 
   # pylint: disable=maybe-no-member
   file = service.files().create(body=file_metadata, fields="id").execute()
-  print(f'Folder ID: "{file.get("id")}".')
   return file.get("id")
 
-# populate the folder with the correct files
-def populateFolder(service, files, folderID):
+# populates
+def populateSheet(sheetsService, sheetID, studentInfo):
+  sheet = sheetsService.spreadsheets()
+  values = [
+    [
+      "", #flags
+      "", #additional notes
+      studentInfo.first_name, #first name
+      studentInfo.last_name, #last name
+      studentInfo.mid_name, #middle name
+      "", #additional name
+      studentInfo.degree_program, #program description
+      studentInfo.level, #degree level
+      studentInfo.gender, #gender
+      studentInfo.dob, #date of birth
+      "", #personal email
+      "", #name of file with ID
+      "", #file 1 name
+      "", #country associated with file 1
+      "", #file 2 name
+      "", #country associated with file 2
+      "", #file 3 name
+      "", #country associated with file 3
+      "", #file 4 name
+      "", #country associated with file 4
+    ],
+  ]
+  body = {"values":values}
+  result = (
+        sheetsService.spreadsheets()
+        .values()
+        .append(
+            spreadsheetId=sheetID,
+            range="Fields!B5:Z",
+            valueInputOption="USER_ENTERED",
+            body=body,
+        )
+        .execute()
+    )
+  
+  #rows = result.get("values")
+  #print(f"{len(rows)} rows retrieved")
+  #print(rows)
   return None
 
 # whatever cleaning may or may not need to happen
@@ -93,20 +136,25 @@ def main():
 
   try:
     service = build("drive", "v3", credentials=creds)
+    sheetsService = build("sheets", "v4", credentials=creds)
 
-    files = getFiles()
+    #files = getFiles()
 
-    studentInfo = getInfo()
+    #studentInfo = getInfo()
 
-    name = getStudentName(studentInfo)
+    #flags = validate(files, studentInfo)
 
-    renameFiles(files, name)
+    #name = getStudentName(studentInfo)
 
-    folderName = getFolderName(studentInfo)
+    studentInfo = None
+    #folderName = getFolderName(studentInfo)
 
-    studentFolder = createFolder(service, folderName)
+    #studentFolder = createFolder(service, folderName)
 
-    populateFolder(service, files, studentFolder)
+    #populateFolder(service, files, name, studentFolder)
+    
+    sheetID = "1WGz4bI5ioohrY6hDr7KH01k_zXNTG1VgKbc_RtLknOc"
+    populateSheet(sheetsService, sheetID, studentInfo)
 
     clean()
   
