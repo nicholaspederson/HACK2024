@@ -7,6 +7,12 @@ Our Document validation system takes student data (a .json file) as input. Then 
 ### Technical Tools
 In our implementation of the document validation system, we used the Tesseract and OpenCV to read text off of a pdf. OpenCV was utilized to convert the pdf into a png file. Tesseract then takes the png file and extracts readable text elements to be compared against the given student data.
 
+## Validation Process
+The student data with all the information on the student was used to check through the pdf to see any matches. If a match was not found, the non-match was denoted in a list that keeps track of all the non-matches. This list was returned to express all the attributes that were not found. This can be used as a flag to check if a certain attribute was found.
+
+## Possible Errors
+One major issue was searching for the gender of a person which could be denoted in a variety of ways. Therefore, the accuracy for this particular field was not great. However, looking for specific words like someone’s name was fairly accurate. Also, searching for specific words like “Transcript” could be easily implemented. 
+
 ## Future Recommendations
 ### Overview
 The current implementation is extremely limited by image quality, being unable to deal with noise, image rotation, etc. The implementation tends to flag much more aggressively than desired due almost entirely to limitations in extracting data from the model. Using more robust tools for extraction of data would provide a much more powerful tool for automating the document validation workflow. The implementation of **student_data.py** is somewhat compatible with a potential database implementation in the future.

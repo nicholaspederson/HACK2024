@@ -96,7 +96,7 @@ class TranscriptVal:
     def validate_data(self):
         """Validates the loaded transcript data against student data.
         Returns:
-        bool -> True if valid, False if discrepancies are found"""
+        list -> discrepancies that are found"""
 
         if not self.transcript_data:
             print("Transcript data not loaded.")
