@@ -9,22 +9,29 @@ import Form from 'react-bootstrap/Form';
 function App() {
 
 
-  const [firstName] = useState("Alex")
-  const [middleName] = useState("");
-  const [lastName] = useState("");
-  const [gender] = useState("");
-  const [dob] = useState("");
-  const [country] = useState("");
-  const [degreeType] = useState("");
+  const [fName, setFname] = useState("")
+  const [mName, setMname] = useState("");
+  const [lName, setLname] = useState("");
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState("");
+  const [country, setCountry] = useState("");
+  const [degreeType, setDegreeType] = useState("");
 
-  function submitStudentData(){
-    let studentData = {firstName:firstName, middleName:middleName, lastName:lastName,
-      gender:gender, dob:dob, country:country, degreeType:degreeType
-    }
-    
-    
+  /*const [formData, setFormData] = useState({
+    firstName:"",
+    middleName:"",
+    lastName:"",
+    gender:"",
+    dob:"",
+    country:"",
+    degreeType:"",
+  })*/
+
+
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    let studentData={fName:fName, mName:mName, lName:lName, gender:gender, dob:dob, country:country, degreeType:degreeType}
     console.log(studentData);
-    return studentData;
   }
 
   return (
@@ -38,27 +45,27 @@ function App() {
       </Tab>
       <Tab eventKey="student" title="Student">
 
-        <Form>
+        <Form noValidate onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Col className="mb-3">
             <Form.Group className="mb-3" controlId="firstNameCon">
                 <Form.Label>First Name</Form.Label>
-                <Form.Control type="firstName" placeholder="First Name" />
+                <Form.Control type="text" placeholder="First Name" value={fName} onChange={(e)=>setFname(e.target.value)}/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="middleNameCon">
                 <Form.Label>Middle Name</Form.Label>
-                <Form.Control type="middleName" placeholder="Middle Name" />
+                <Form.Control type="middleName" placeholder="Middle Name" value={mName} onChange={(e)=>setMname(e.target.value)}/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="lastNameCon">
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control type="lastName" placeholder="Last Name" />
+                <Form.Control type="lastName" placeholder="Last Name" value={lName} onChange={(e)=>setLname(e.target.value)}/>
               </Form.Group>
             </Col>
               
             </Row>
               <Form.Group>
                 <Form.Label>Gender</Form.Label>
-                  <Form.Select aria-label="gender">
+                  <Form.Select aria-label="gender" value={gender} onChange={(e)=>setGender(e.target.value)}>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </Form.Select>
@@ -66,12 +73,10 @@ function App() {
 
               <Form.Group>
                 <Form.Label>Date of Birth</Form.Label>
-                <input aria-label="Date" type="date" /> 
+                <Form.Control type="date" placeholder="Date of Birth: " value={dob} onChange={(e)=>setDob(e.target.value)}/>
               </Form.Group>
+              <Button variant="primary" type="submit">Submit</Button>
         </Form>
-        <Button onClick={() => submitStudentData()} variant="primary" type="submit">
-        Submit
-        </Button>
       </Tab>
       <Tab eventKey="validation" title="Validation">
         Tab content for Validation Flow
