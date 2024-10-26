@@ -1,12 +1,19 @@
 import { useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import './App.css'
+import './App.css';
+import Button from 'react-bootstrap/Button';
 
 function App() {
 
 
   const [firstName] = useState("Alex")
+  const [middleName] = useState("");
+  const [lastName] = useState("");
+  const [gender] = useState("");
+  const [dob] = useState("");
+  const [country] = useState("");
+  const [degreeType] = useState("");
 
   return (
     <Tabs
