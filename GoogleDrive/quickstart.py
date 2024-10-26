@@ -1,4 +1,7 @@
 import os.path
+import shutil
+
+from apiclient.http import MediaFileUpload #type:ignore
 
 from google.auth.transport.requests import Request # type: ignore
 from google.oauth2.credentials import Credentials # type: ignore
@@ -51,7 +54,13 @@ def getStudentName(studentInfo):
   return ""
 
 # prepends the name to each file
-def renameFiles(files, name):
+def populateFolder(service, files, name, studentFolder):
+  for file in files:
+    new_file = open(name, 'w')
+    shutil.copyfileobj(file, new_file)
+    fileMetaData = {"name": name, "mimeType": "application/pdf", "parents": [studentFolder]}
+    media = MediaFileUpload(name, resumable=True)
+    f = service.files().create(body=fileMetaData, media_body=media, fields='id, name').execute()
   return None
 
 # gets the appropriate student name from
@@ -77,12 +86,7 @@ def createFolder(service, folderName):
 
   # pylint: disable=maybe-no-member
   file = service.files().create(body=file_metadata, fields="id").execute()
-  print(f'Folder ID: "{file.get("id")}".')
   return file.get("id")
-
-# populate the folder with the correct files
-def populateFolder(service, files, folderID):
-  return None
 
 # whatever cleaning may or may not need to happen
 def clean():
@@ -100,13 +104,11 @@ def main():
 
     name = getStudentName(studentInfo)
 
-    renameFiles(files, name)
-
     folderName = getFolderName(studentInfo)
 
     studentFolder = createFolder(service, folderName)
 
-    populateFolder(service, files, studentFolder)
+    populateFolder(service, files, name, studentFolder)
 
     clean()
   
