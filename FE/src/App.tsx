@@ -17,6 +17,16 @@ function App() {
   const [country] = useState("");
   const [degreeType] = useState("");
 
+  function submitStudentData(){
+    let studentData = {firstName:firstName, middleName:middleName, lastName:lastName,
+      gender:gender, dob:dob, country:country, degreeType:degreeType
+    }
+    
+    
+    console.log(studentData);
+    return studentData;
+  }
+
   return (
     <Tabs
       defaultActiveKey="profile"
@@ -58,11 +68,10 @@ function App() {
                 <Form.Label>Date of Birth</Form.Label>
                 <input aria-label="Date" type="date" /> 
               </Form.Group>
-
-
         </Form>
-
-
+        <Button onClick={() => submitStudentData()} variant="primary" type="submit">
+        Submit
+        </Button>
       </Tab>
       <Tab eventKey="validation" title="Validation">
         Tab content for Validation Flow
