@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import './App.css'
@@ -8,6 +9,9 @@ import Form from 'react-bootstrap/Form';
 
 
 function App() {
+
+
+  const [firstName] = useState("Alex")
 
   return (
     <Tabs
