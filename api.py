@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from DocumentValidation.student_data import StudentData
+from DocumentValidation.StudentData import StudentData
 from GoogleDrive import quickstart as google_drive
 
 app = FastAPI()
@@ -21,7 +21,7 @@ async def options(_: str):
 
 
 @app.post("/")
-async def say_hello(request: StudentData):
+async def post_student(request: StudentData):
     print("Sending student data to google drive")
     google_drive.main(request)
 
