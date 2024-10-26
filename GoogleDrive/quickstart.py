@@ -37,13 +37,6 @@ def getCreds():
       token.write(creds.to_json())
   return creds
 
-# gets the submitted files
-def getFiles():
-  return None
-
-# utilizse an API to call to a databse
-# with the given unique identifier
-# to get relevant student info
 def getInfo():
   return None
 
@@ -98,6 +91,47 @@ def createFolder(service, folderName):
   file = service.files().create(body=file_metadata, fields="id").execute()
   return file.get("id")
 
+# populates
+def populateSheet(sheetsService, sheetID, studentInfo):
+  sheet = sheetsService.spreadsheets()
+  values = [
+    [
+      "", #flags
+      "", #additional notes
+      studentInfo.first_name, #first name
+      studentInfo.last_name, #last name
+      studentInfo.mid_name, #middle name
+      "", #additional name
+      studentInfo.degree_program, #program description
+      studentInfo.level, #degree level
+      studentInfo.gender, #gender
+      studentInfo.dob, #date of birth
+      "", #personal email
+      "", #name of file with ID
+      "", #file 1 name
+      "", #country associated with file 1
+      "", #file 2 name
+      "", #country associated with file 2
+      "", #file 3 name
+      "", #country associated with file 3
+      "", #file 4 name
+      "", #country associated with file 4
+    ],
+  ]
+  body = {"values":values}
+  result = (
+        sheetsService.spreadsheets()
+        .values()
+        .append(
+            spreadsheetId=sheetID,
+            range="Fields!B5:Z",
+            valueInputOption="USER_ENTERED",
+            body=body,
+        )
+        .execute()
+    )
+  return None
+
 # whatever cleaning may or may not need to happen
 def clean():
   return None
@@ -107,18 +141,21 @@ def main():
 
   try:
     service = build("drive", "v3", credentials=creds)
-
-    files = getFiles()
+    sheetsService = build("sheets", "v4", credentials=creds)
 
     studentInfo = getInfo()
 
+    #flags = validate(files, studentInfo)
+
     name = getStudentName(studentInfo)
 
-    folderName = getFolderName(studentInfo)
+    studentFolder = createFolder(service, folderName)
 
     studentFolder = createFolder(service, folderName)
 
     populateFolder(service, files, name, studentFolder)
+
+    populateSheet(sheetsService, sheetID, studentInfo)
 
     clean()
   
