@@ -144,7 +144,7 @@ function App() {
                     </Form.Select>
                 </Form.Group>
           </Row> 
-          <Row className="mt-5">
+          <Row className="mt-3">
 
             <Form.Label>{degreeLevel}</Form.Label>          
             
@@ -152,14 +152,30 @@ function App() {
         </Form>
       </Tab>
       <Tab eventKey="validation" title="Validation">
-        
-      <Form.Group className="mb-3">
-        <Form.Label htmlFor="formFile" className="form-label">Transcript</Form.Label>
-        <Form.Control type="file" />
-      </Form.Group>
+          <Form>
+            <Form.Label className="pt-5 form-control-lg">All documents must be submitted in .pdf format. </Form.Label>
+            <Form.Label className="pt-1 form-control-lg">If you are unable to convert your documents to a .pdf, please email them directly to admissions@miscio.io</Form.Label>
+            <Form.Group className="mt-5">
+              <Form.Label htmlFor="formFileLg" className="form-label">National ID</Form.Label>
+              <Form.Control type="file" accept="application/pdf"/>
+            </Form.Group>
+          <Row className="mt-3">
+            <Form.Group as={Col} className="mt-5">
+              <Form.Label htmlFor="formFileLg" className="form-label">Transcript</Form.Label>
+              <Form.Control type="file" accept="application/pdf" required/>
+            </Form.Group>
 
-
-
+            <Form.Group as={Col} className="mt-5">
+              <Form.Label htmlFor="formFileLg" className="form-label">Transcript 2</Form.Label>
+              <Form.Control type="file" accept="application/pdf"/>
+            </Form.Group>
+    
+            <Form.Group as={Col} className="mt-5">
+              <Form.Label htmlFor="formFileLg" className="form-label">Transcript 3</Form.Label>
+              <Form.Control type="file" accept="application/pdf"/>
+            </Form.Group>
+          </Row>
+        </Form>
       </Tab>
     </Tabs>
   )
