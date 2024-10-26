@@ -1,6 +1,6 @@
 import os.path
 
-from apiclient.http import MediaFileUpload #type:ignore
+from apiclient.http import MediaFileUpload # type:ignore
 
 from google.auth.transport.requests import Request # type: ignore
 from google.oauth2.credentials import Credentials # type: ignore
@@ -120,20 +120,20 @@ def populateSheet(sheetsService, sheetID, studentInfo):
       "", #additional notes
       studentInfo.first_name, #first name
       studentInfo.last_name, #last name
-      studentInfo.mid_name, #middle name
-      "", #additional name
+      studentInfo.middle_name, #middle name
+      studentInfo.additional_name, #additional name
       studentInfo.degree_program, #program description
       studentInfo.level, #degree level
       studentInfo.gender, #gender
       studentInfo.dob, #date of birth
-      "", #personal email
+      studentInfo.email, #personal email
       "", #name of file with ID
       "", #file 1 name
-      "", #country associated with file 1
+      studentInfo.country1, #country associated with file 1
       "", #file 2 name
-      "", #country associated with file 2
+      studentInfo.country2, #country associated with file 2
       "", #file 3 name
-      "", #country associated with file 3
+      studentInfo.country3, #country associated with file 3
       "", #file 4 name
       "", #country associated with file 4
     ],
