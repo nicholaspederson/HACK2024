@@ -16,7 +16,8 @@ function App() {
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
-  const [degreeType, setDegreeType] = useState("");
+  const [email, setEmail] = useState("");
+  const [addlName, setAddlname] = useState("");
 
   const [nationalID, setNationalID] = useState("");
   const [transcript1, setTranscript1] = useState("")
@@ -68,10 +69,21 @@ function App() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    let studentData = { fName: fName, mName: mName, lName: lName, gender: gender, dob: dob, degreeType: degreeType, nationalID: nationalID, transcript1: transcript1, transcript2: transcript2, transcript3: transcript3, country1: country1, country2:country2, country3: country3 }
-    console.log(studentData);
-  }
+    let studentData = { first_name: fName, middle_name: mName, last_name: lName, additional_name: addlName, gender: gender, dob: dob, degree_level: degreeLevel, email: email, degree_program: degreeProgram, country1: country
+     }
+     let jsonData = JSON.stringify(studentData);
+     fetch('https://transcript-app-575087806626.us-central1.run.app/' , {
+      method: 'POST',
+      body: jsonData,
+      headers: {
+        "content-type": "application/json"
+      }
+     })
+     .then(response => response.json())
+     .then(json => console.log(json))
 
+    console.log(jsonData);
+  }
   return (
     <Tabs
       defaultActiveKey="profile"
@@ -90,39 +102,41 @@ function App() {
               <Form.Control type="text" placeholder="First Name" value={fName} onChange={(e) => setFname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="middleNameCon">
-              <Form.Label><br/>Middle Name</Form.Label>
-              <Form.Control type="middleName" placeholder="Middle Name" value={mName} onChange={(e) => setMname(e.target.value)} />
+              <Form.Label>Middle Name</Form.Label>
+              <Form.Control type="text" placeholder="Middle Name" value={mName} onChange={(e) => setMname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="lastNameCon">
-              <Form.Label><br/>Last Name</Form.Label>
-              <Form.Control type="lastName" placeholder="Last Name" value={lName} onChange={(e) => setLname(e.target.value)} />
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control type="text" placeholder="Last Name" value={lName} onChange={(e) => setLname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="additionalNameCon">
               <Form.Label>Additional Name (maiden name, second last name, etc.)</Form.Label>
-              <Form.Control required type="text" placeholder="Additional Name" />
+              <Form.Control type="text" placeholder="Additional Name" value={addlName} onChange={(e) => 
+                setAddlname(e.target.value)}/>
             </Form.Group>
           </Row>
           <Row className="pt-5">
             <Form.Group as={Col} className="mr-3" controlId="gender">
               <Form.Label>Gender</Form.Label>
               <Form.Select aria-label="gender" value={gender} onChange={(e) => setGender(e.target.value)}>
+                  <option value=""></option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="birthdate">
               <Form.Label>Date of Birth: </Form.Label>
-              <Form.Control type="date" placeholder="Date of Birth: " value={dob} onChange={(e) => setDob(e.target.value)} />
+              <Form.Control type="date" placeholder="Date of Birth" value={dob} onChange={(e) => setDob(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="email">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="text" placeholder="example@mail.com" />
+              <Form.Control type="text" placeholder="example@mail.com" value={email} onChange={(e) => setEmail(e.target.value)}/>
             </Form.Group>
           </Row>
           <Row className="pt-5">
             <Form.Group as={Col} className="mr-3" controlId="degreeLevel">
               <Form.Label>Degree Program</Form.Label>
-              <Form.Select aria-label="degreeLevel" value={degreeProgram} onChange={(e) => setDegreeProgram(e.target.value)}>
+              <Form.Select aria-label="degreeProgram" value={degreeProgram} onChange={(e) => setDegreeProgram(e.target.value)}>
                 <option value=""></option>
                 <option value="Associate of Arts, General Education">Associate of Arts, General Education</option>
                 <option value="Associate of Ministerial Leadership">Associate of Ministerial Leadership</option>
