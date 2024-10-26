@@ -1,13 +1,13 @@
 import os.path
 
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+from google.auth.transport.requests import Request # type: ignore
+from google.oauth2.credentials import Credentials # type: ignore
+from google_auth_oauthlib.flow import InstalledAppFlow # type: ignore
+from googleapiclient.discovery import build # type: ignore
+from googleapiclient.errors import HttpError # type: ignore
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"]
+SCOPES = ["https://www.googleapis.com/auth/drive"]
 
 
 def main():
@@ -36,8 +36,16 @@ def main():
   try:
     service = build("drive", "v3", credentials=creds)
 
-    # Call the Drive v3 API
-    
+    file_metadata = {
+        "name": "Transcrips",
+        "mimeType": "application/vnd.google-apps.folder",
+      }
+
+    # pylint: disable=maybe-no-member
+    file = service.files().create(body=file_metadata, fields="id").execute()
+    print(f'Folder ID: "{file.get("id")}".')
+    return file.get("id")
+  
   except HttpError as error:
     # TODO(developer) - Handle errors from drive API.
     print(f"An error occurred: {error}")
