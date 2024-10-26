@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs'
 import Button from 'react-bootstrap/Button';
@@ -18,6 +18,39 @@ function App() {
   const [country, setCountry] = useState("");
   const [email, setEmail] = useState("");
   const [addlName, setAddlname] = useState("");
+
+  const [nationalID, setNationalID] = useState("");
+  const [transcript1, setTranscript1] = useState("")
+  const [transcript2, setTranscript2] = useState("")
+  const [transcript3, setTranscript3] = useState("")
+
+  const [country1, setCountry1] = useState("")
+  const [country2, setCountry2] = useState("")
+  const [country3, setCountry3] = useState("")
+
+
+
+
+
+  function nationalIDChange(e:any){
+    setNationalID(e.target.files[0])
+    console.log(nationalID)
+  }
+
+  function transcriptOneChange(e:any){
+    setTranscript3(e.target.files[0])
+    console.log(transcript1)
+  }
+
+  function transcriptTwoChange(e:any){
+    setTranscript2(e.target.files[0])
+    console.log(transcript2)
+  }
+
+  function transcriptThreeChange(e:any){
+    setTranscript3(e.target.files[0])
+    console.log(transcript3)
+  }
 
 
   useEffect(() => {
@@ -51,7 +84,6 @@ function App() {
 
     console.log(jsonData);
   }
-
   return (
     <Tabs
       defaultActiveKey="profile"
@@ -64,9 +96,9 @@ function App() {
 
       <Tab eventKey="student" title="Student">
         <Form noValidate onSubmit={handleSubmit}>
-          <Row className="pt-5">
+          <Row className="mt-5">
             <Form.Group as={Col} className="mr-3" controlId="firstNameCon">
-              <Form.Label>First Name</Form.Label>
+              <Form.Label><br/>First Name</Form.Label>
               <Form.Control type="text" placeholder="First Name" value={fName} onChange={(e) => setFname(e.target.value)} />
             </Form.Group>
             <Form.Group as={Col} className="mr-3" controlId="middleNameCon">
@@ -102,13 +134,7 @@ function App() {
             </Form.Group>
           </Row>
           <Row className="pt-5">
-            <Form.Group as={Col} className="mr-3" controlId="country">
-              <Form.Label>Country of Education</Form.Label>
-              <Form.Control type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)}/>
-            </Form.Group>
-          </Row>
-          <Row className="pt-5">
-            <Form.Group as={Col} className="mr-3" controlId="degreeProgram">
+            <Form.Group as={Col} className="mr-3" controlId="degreeLevel">
               <Form.Label>Degree Program</Form.Label>
               <Form.Select aria-label="degreeProgram" value={degreeProgram} onChange={(e) => setDegreeProgram(e.target.value)}>
                 <option value=""></option>
@@ -160,19 +186,45 @@ function App() {
               </Form.Select>
             </Form.Group>
           </Row>
-          <Row className="mt-5">
+            <Form.Label className="pt-3 form-control-md"><br/><br/>All documents must be submitted in .pdf format. <br/>If you are unable to convert your documents to a .pdf, <br/>please email them directly to admissions@miscio.io</Form.Label>
+            <Form.Group className="mt-3">
+              <Form.Label htmlFor="formFileLg" className="form-label-lg">National ID</Form.Label>
+              <Form.Control type="file" accept="application/pdf" onChange= {nationalIDChange}/>
+            </Form.Group>
+          <Row className="mt-3">
+            <Form.Group as={Col} className="mr-3">
+              <Form.Label htmlFor="formFileLg" className="form-label">Transcript</Form.Label>
+              <Form.Control type="file" accept="application/pdf" required onChange={transcriptOneChange}/>
+            </Form.Group>
 
-            <Form.Label>{degreeLevel}</Form.Label>
+            <Form.Group as={Col} className="mr-3">
+              <Form.Label htmlFor="formFileLg" className="form-label">Transcript 2</Form.Label>
+              <Form.Control type="file" accept="application/pdf" onChange={transcriptTwoChange}/>
+            </Form.Group>
+    
+            <Form.Group as={Col} className="mr-3">
+              <Form.Label htmlFor="formFileLg" className="form-label">Transcript 3</Form.Label>
+              <Form.Control type="file" accept="application/pdf" onChange={transcriptThreeChange}/>
+            </Form.Group>
+          </Row>
+          <Row className="mt-3">
+            <Form.Group as={Col} className="mr-3" controlId="countryTranscript1">
+              <Form.Label>Issuing Country</Form.Label>
+              <Form.Control type="text" placeholder="Country" value={country1} onChange={(e) => setCountry1(e.target.value)}/>
+            </Form.Group>
+            <Form.Group as={Col} className="mr-3" controlId="countryTranscript2">
+              <Form.Label>Issuing Country</Form.Label>
+              <Form.Control type="text" placeholder="Country" value={country2} onChange={(e) => setCountry2(e.target.value)}/>
+            </Form.Group>
+            <Form.Group as={Col} className="mr-3" controlId="countryTranscript3">
+              <Form.Label>Issuing Country</Form.Label>
+              <Form.Control type="text" placeholder="Country" value={country3} onChange={(e) => setCountry3(e.target.value)}/>
+            </Form.Group>
+          </Row>
+          <Row className="mt-5">
             <Button variant="primary" type="submit">Submit</Button>
           </Row>
         </Form>
-      </Tab>
-      <Tab eventKey="validation" title="Validation">
-
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="formFile" className="form-label">Transcript</Form.Label>
-          <Form.Control type="file" />
-        </Form.Group>
       </Tab>
     </Tabs>
   )
