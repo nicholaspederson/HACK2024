@@ -171,10 +171,10 @@ def main(studentInfo):
     #creates the folder in the drive with the given name
     studentFolder = createFolder(service, folderName)
     #sample file since this is not conencted to the API
-    files = [open("GoogleDrive\\sample.pdf", "r", encoding='latin-1')]
+    #files = [open("GoogleDrive\\sample.pdf", "r", encoding='latin-1')]
     #populates the created folder with files
     #files should be included in the API call from the front-end
-    populateFolder(service, files, name, studentFolder)
+    #populateFolder(service, files, name, studentFolder)
     #populates the google sheet with the student info
     populateSheet(sheetsService, studentInfo)
   
