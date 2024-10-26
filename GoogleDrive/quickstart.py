@@ -50,7 +50,8 @@ def getStudentName(studentInfo: StudentData):
     studentName = str(studentInfo.first_name + "_" + studentInfo.last_name)
   return studentName
 
-# prepends the name to each file
+#Goes through all the files, and adds them to the folder
+#Changes all of the names to the correct name
 def populateFolder(service, files, name, studentFolder):
   for file in files:
     #fileName = file.name.split('\\')[-1]
