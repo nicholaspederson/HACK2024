@@ -26,7 +26,7 @@ def main():
       creds.refresh(Request())
     else:
       flow = InstalledAppFlow.from_client_secrets_file(
-          "credentials.json", SCOPES
+          "PatriceCredentials.json", SCOPES
       )
       creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
@@ -36,15 +36,29 @@ def main():
   try:
     service = build("drive", "v3", credentials=creds)
 
-    file_metadata = {
-        "name": "Transcripts",
-        "mimeType": "application/vnd.google-apps.folder",
-      }
+    file_metadata = {"name": "LastName_FirstName_MiddleName_DegreeSeeking-Candidate_Country",
+                     "mimeType": "application/vnd.google-apps.folder",
+                      "parents": ["1o0f25LLI9rtfjMGkfMJn6l-fDkXTKfOt"]}
 
     # pylint: disable=maybe-no-member
     file = service.files().create(body=file_metadata, fields="id").execute()
     print(f'Folder ID: "{file.get("id")}".')
     return file.get("id")
+
+    '''    # Call the Drive v3 API
+    results = (
+        service.files()
+        .list(pageSize=10, fields="nextPageToken, files(id, name)")
+        .execute()
+    )
+    items = results.get("files", [])
+
+    if not items:
+      print("No files found.")
+      return
+    print("Files:")
+    for item in items:
+      print(f"{item['name']} ({item['id']})")'''
   
   except HttpError as error:
     # TODO(developer) - Handle errors from drive API.
