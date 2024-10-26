@@ -1,6 +1,8 @@
 # Document Validation Team Documentation
 
 ## Current Implementation
+### Outlined Structure
+Our Document validation system takes student data (a .json file) as input. Then to validate a transcript we converted the each pdf image into the form of text. For this transcript string produced, we search for the expected student data, and flag (add the attribute name to a list) each instance where student information is not found within the converted text. A flag is then paired with student data for output into the google drive team.
 
 ## Future Recommendations
 ### Overview
