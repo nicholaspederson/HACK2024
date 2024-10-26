@@ -21,6 +21,11 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
+      - name: Authenticate Docker with GCP
+        run: |
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | gcloud auth activate-service-account --key-file=-
+          gcloud auth configure-docker --quiet
+
       - name: Build and Push Docker Image to Google Container Registry
         env:
           GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
