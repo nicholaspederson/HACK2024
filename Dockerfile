@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the code and install dependencies
 COPY . /app
-RUN pip install fastapi uvicorn pydantic
+RUN pip install fastapi uvicorn pydantic google-api-python-client google-auth-httplib2 google-auth-oauthlib apiclient
 
 # Expose the port and run the server
 EXPOSE 8080
