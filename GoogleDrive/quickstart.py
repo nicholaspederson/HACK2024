@@ -9,7 +9,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow # type: ignore
 from googleapiclient.discovery import build # type: ignore
 from googleapiclient.errors import HttpError
 
-from DocumentValidation.student_data import StudentData # type: ignore
+from DocumentValidation.student_data import StudentData
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/drive"]
@@ -29,7 +29,7 @@ def getCreds():
       creds.refresh(Request())
     else:
       flow = InstalledAppFlow.from_client_secrets_file(
-          "credentials.json", SCOPES
+          "GoogleDrive/credentials.json", SCOPES
       )
       creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
@@ -44,7 +44,7 @@ def getFiles():
 # utilizse an API to call to a databse
 # with the given unique identifier
 # to get relevant student info
-def getInfo(UID):
+def getInfo():
   return None
 
 # parses studentInfo to generate
