@@ -1,5 +1,4 @@
 import os.path
-import shutil
 
 from apiclient.http import MediaFileUpload #type:ignore
 
@@ -7,7 +6,7 @@ from google.auth.transport.requests import Request # type: ignore
 from google.oauth2.credentials import Credentials # type: ignore
 from google_auth_oauthlib.flow import InstalledAppFlow # type: ignore
 from googleapiclient.discovery import build # type: ignore
-from googleapiclient.errors import HttpError
+from googleapiclient.errors import HttpError # type: ignore
 
 from DocumentValidation.student_data import StudentData
 
@@ -43,18 +42,20 @@ def getInfo():
 # parses studentInfo to generate
 # appropriate file names
 # return in format FirstName_LastName
-def getStudentName(studentInfo):
+def getStudentName(studentInfo: StudentData):
+  studentName = ""
   if studentInfo == None:
-    return "FirstName_LastName"
-  return ""
+    studentName = "FirstName_LastName"
+  else:
+    studentName = str(studentInfo.first_name + "_" + studentInfo.last_name)
+  return studentName
 
 # prepends the name to each file
 def populateFolder(service, files, name, studentFolder):
   for file in files:
-    new_file = open(name, 'w')
-    shutil.copyfileobj(file, new_file)
-    fileMetaData = {"name": name, "mimeType": "application/pdf", "parents": [studentFolder]}
-    media = MediaFileUpload(name, resumable=True)
+    #fileName = file.name.split('\\')[-1]
+    fileMetaData = {"name": name+"_"+file.name.split('\\')[-1], "mimeType": "application/pdf", "parents": [studentFolder]}
+    media = MediaFileUpload(file.name, resumable=True)
     f = service.files().create(body=fileMetaData, media_body=media, fields='id, name').execute()
   return None
 
@@ -132,10 +133,6 @@ def populateSheet(sheetsService, sheetID, studentInfo):
     )
   return None
 
-# whatever cleaning may or may not need to happen
-def clean():
-  return None
-
 def main():
   creds = getCreds()
 
@@ -153,12 +150,11 @@ def main():
 
     studentFolder = createFolder(service, folderName)
 
+    files = [open("GoogleDrive\sample.pdf", "r", encoding='latin-1')]
     populateFolder(service, files, name, studentFolder)
 
     sheetID = "1WGz4bI5ioohrY6hDr7KH01k_zXNTG1VgKbc_RtLknOc"
     populateSheet(sheetsService, sheetID, studentInfo)
-
-    clean()
   
   except HttpError as error:
     # TODO(developer) - Handle errors from drive API.
