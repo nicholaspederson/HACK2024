@@ -36,7 +36,18 @@ Run the following commands while in the FE directory to view the front end:
 The API is used to connect the front end to the back end functions, which includes both the document validation and the Google Drive file uploading functions. The API has only one `POST` endpoint, at the root of the API (`"/"`), which expects form data as its body. The form data must include two parts, namely:
 
 1. `request`: A json blob including the following fields:
-   `first_name` (string), `middle_name` (string), `last_name` (string), `additional_name` (string, optional), `gender` (string), `dob` (string), `degree_level` (string), `degree_program` (string), `email` (string), `country1` (string), `country2` (string, optional), `country3` (string).
+   - `first_name` (string)
+   - `middle_name` (string)
+   - `last_name` (string)
+   - `additional_name` (string, optional)
+   - `gender` (string)
+   - `dob` (string)
+   - `degree_level` (string)
+   - `degree_program` (string)
+   - `email` (string)
+   - `country1` (string)
+   - `country2` (string, optional)
+   - `country3` (string, optional)
 2. `files`: A list of files to upload as verification. Each country field should correspond to the country of origin for its respective file.
 
 ### Example API request using Typescript:
@@ -81,9 +92,9 @@ fetch(apiURL, {
 
 1. To test the API locally, make sure the following python pip packages are installed:
 
-```
-pip install fastapi uvicorn pydantic google-api-python-client google-auth-httplib2 google-auth-oauthlib apiclient python-multipart
-```
+   ```
+   pip install fastapi uvicorn pydantic google-api-python-client google-auth-httplib2 google-auth-oauthlib apiclient python-multipart
+   ```
 
 2. Run the API using `python api.py`.
 
@@ -97,42 +108,42 @@ If you want the API to be accessible to the internet, uploading the API to Googl
 
 2. Install the google cloud client, instructions can be found at https://cloud.google.com/sdk/docs/install. After the tool is installed, run `gcloud init` to authenticate with the Google Cloud Account that will be running the API. Configure gcloud to use the Google Cloud project you want to use for this app.
 
-(Unfortunately, `gcloud` is the only way to upload a docker image to Google Cloud).
+   (Unfortunately, `gcloud` is the only way to upload a docker image to Google Cloud).
 
-3. Build the docker image with a name.
+3. Build the docker image with a name `<build-name>`.
 
-```
-docker build . -t <build name>
-```
+   ```
+   docker build . -t <build-name>
+   ```
 
-NOTE: if docker doesn't run, follow steps to add your user to the docker user group: for linux, use https://docs.docker.com/engine/install/linux-postinstall/
+   NOTE: if docker doesn't run, follow steps to add your user to the docker user group: for linux, use https://docs.docker.com/engine/install/linux-postinstall/. This works better than using `sudo` to run docker.
 
 4. In the Google Cloud Artifact Registry, create a Repository. This is where the image will be uploaded so it can be ran.
 
 5. Tag the image to relate it to Google Cloud Container Registry. Make sure the gcloud client authenticates docker by first running
 
-```
-gcloud auth configure-docker us-central1-docker.pkg.dev
-```
+   ```
+   gcloud auth configure-docker us-central1-docker.pkg.dev
+   ```
 
-Then run the following, using the name of the docker image from step 3, the name of the Google Cloud project, the name of the repository in Google Cloud Artifact Registry, and a tag (such as 1.0.0).
+   Then run the following, using `<build-name>` the name of the docker image from step 3, `<your-project-name>` the name of the Google Cloud project, `<repository-name>` the name of the repository in Google Cloud Artifact Registry from step 4, and `<tag>` an arbitrary tag (such as 1.0.0).
 
-```
-docker tag <build name> us-central1-docker.pkg.dev/<your-project-name>/<repository-name>/transcript-app:<tag>
-```
+   ```
+   docker tag <build-name> us-central1-docker.pkg.dev/<your-project-name>/<repository-name>/transcript-app:<tag>
+   ```
 
 6. Use docker to push the image to the registry, using the same values as above.
 
-```
-docker push us-central1-docker.pkg.dev/<your-project-name>/transcript-app:<tag>
-```
+   ```
+   docker push us-central1-docker.pkg.dev/<your-project-name>/transcript-app:<tag>
+   ```
 
 7. Lastly, use gcloud to run the image in Google Cloud Run (replace <your-service-name> with any name you want)!
 
-```
-gcloud run deploy <your-service-name> --image us-central1-docker.pkg.dev/<your-project-name>/<repository-name>/transcript-app:<tag> --platform managed
-```
+   ```
+   gcloud run deploy <your-service-name> --image us-central1-docker.pkg.dev/<your-project-name>/<repository-name>/transcript-app:<tag> --platform managed
+   ```
 
-The command will give you the URL to input into the front end. It will look something like `https://<your-service-name>-<some numbers>.us-central1.run.app`
+   The command will give you the URL to input into the front end. It will look something like `https://<your-service-name>-<some numbers>.us-central1.run.app`
 
 NOTE: To redeploy a new version of the API, you only need to repeat steps 3, 6, and 7, unless you want to change the configuration for other steps.
