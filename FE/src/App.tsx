@@ -71,12 +71,20 @@ function App() {
     let studentData = { first_name: fName, middle_name: mName, last_name: lName, additional_name: addlName, gender: gender, dob: dob, degree_level: degreeLevel, email: email, degree_program: degreeProgram, country1: country1, country2: country2, country3: country3
      }
      let jsonData = JSON.stringify(studentData);
+
+     const formData = new FormData()
+     formData.append("request", jsonData);
+     formData.append("files", transcript1)
+     if (transcript2) {
+         formData.append("files", transcript2)
+     }
+     if (transcript3) {
+         formData.append("files", transcript3)
+     }
+
      fetch('https://transcript-app-575087806626.us-central1.run.app/' , {
       method: 'POST',
-      body: jsonData,
-      headers: {
-        "content-type": "application/json"
-      }
+      body: formData
      })
      .then(response => response.json())
      .then(json => console.log(json))
