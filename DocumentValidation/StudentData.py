@@ -1,10 +1,12 @@
 from pydantic import BaseModel
 from typing import Optional
 
+
 class StudentData(BaseModel):
     """
     Parse JSON into a class
     """
+
     first_name: str
     middle_name: str = ""
     last_name: str
@@ -16,4 +18,4 @@ class StudentData(BaseModel):
     email: str
     country1: str
     country2: Optional[str] = None
-    country3: str
+    country3: Optional[str] = None

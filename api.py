@@ -4,6 +4,7 @@ import json
 import os
 from tempfile import SpooledTemporaryFile
 from typing import List
+import uvicorn
 
 from DocumentValidation.StudentData import StudentData
 
@@ -53,3 +54,7 @@ async def post_student(files: List[UploadFile] = File(...), request: str = Form(
         os.remove(local_file.name)
 
     return "student data recieved"
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8080)
