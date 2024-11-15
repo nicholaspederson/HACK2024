@@ -147,3 +147,7 @@ If you want the API to be accessible to the internet, uploading the API to Googl
    The command will give you the URL to input into the front end. It will look something like `https://<your-service-name>-<some numbers>.us-central1.run.app`
 
 NOTE: To redeploy a new version of the API, you only need to repeat steps 3, 6, and 7, unless you want to change the configuration for other steps.
+
+## Shortcomings
+
+* Currently the Document Validation code is not integrated into the API/Backend
