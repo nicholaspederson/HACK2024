@@ -5,3 +5,5 @@ quickstart.py is a script that will need to be given student information and fil
 
 The credentials.json file that is used will no longer be valid as it will be deleted. You will have to make your own client. https://console.cloud.google.com/apis/credentials. 
 https://developers.google.com/drive/api/quickstart/python gives a more general overview on how to use google API
+
+The National ID currently does not get put into the Google Drive folder that is created.  This will need to be added.
