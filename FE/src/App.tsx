@@ -74,6 +74,7 @@ function App() {
 
      const formData = new FormData()
      formData.append("request", jsonData);
+     formData.append("files", nationalID)
      formData.append("files", transcript1)
      if (transcript2) {
          formData.append("files", transcript2)
@@ -82,7 +83,7 @@ function App() {
          formData.append("files", transcript3)
      }
 
-     fetch('https://transcript-app-575087806626.us-central1.run.app/' , {
+     fetch('http://localhost:8080' , {
       method: 'POST',
       body: formData
      })
